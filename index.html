@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tinh Hoa Tiên Nộn | Nhóm 2 - Tổ 4</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --son-son: #800000; /* Đỏ sơn son đặc trưng */
+            --vang-thep: #D4AF37; /* Vàng thếp rực rỡ */
+            --den-漆: #111111; /* Đen sâu như sơn mài */
+            --white: #ffffff;
+            --bg-color: #f0f2f5; /* Màu nền web để làm nổi bật các khối */
+            --transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+            --gold-color: #D4AF37;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* Đổi nền body thành xám nhạt để các khối trắng nổi lên */
+        body { 
+            font-family: 'Be Vietnam Pro', sans-serif; 
+            background: var(--bg-color); 
+            color: var(--den-漆); 
+            line-height: 1.8; 
+            overflow-x: hidden; 
+        }
+
+        /* TÁCH KHỐI CHO CÁC SECTION */
+        section { 
+            background: var(--white);
+            margin: 60px auto; /* Khoảng cách giữa các khối */
+            padding: 80px 8%; 
+            max-width: 1300px; /* Giới hạn chiều rộng khối */
+            border-radius: 20px; /* Bo góc khối */
+            box-shadow: 0 10px 40px rgba(0,0,0,0.06); /* Đổ bóng tách khối */
+        }
+
+        .section-title { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 2.8rem; 
+            color: var(--son-son); 
+            margin-bottom: 50px; 
+            text-align: center; 
+            position: relative; 
+        }
+        .section-title::after { 
+            content: '⚜️'; 
+            display: block; 
+            font-size: 1.5rem; 
+            margin-top: 10px; 
+            color: var(--vang-thep); 
+        }
+
+        /* Hiệu ứng Reveal */
+        .reveal { opacity: 0; transform: translateY(40px); transition: var(--transition); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Navigation */
+        header {
+            position: fixed; top: 0; width: 100%; padding: 25px 8%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; 
+            transition: transform 0.4s ease-in-out, background 0.4s, padding 0.4s, box-shadow 0.4s;
+        }
+        header.sticky { background: var(--son-son); padding: 15px 8%; box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
+        header.hide-up { transform: translateY(-100%); }
+
+        .logo { font-family: 'Playfair Display', serif; color: var(--vang-thep); font-size: 1.6rem; text-decoration: none; font-weight: 900; letter-spacing: 2px; }
+        nav a { color: var(--white); text-decoration: none; margin-left: 30px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        
+        /* -------------------------------------
+           HERO SECTION (POSTER FULL MÀN HÌNH) 
+           ------------------------------------- */
+        .hero {
+            height: 100vh; /* Full màn hình */
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('1.jpg'); /* Phủ nền mờ và gọi ảnh 1.jpg */
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed; /* Hiệu ứng cuộn Parallax */
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: var(--white); 
+            text-align: center;
+        }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 6vw, 5rem); color: var(--vang-thep); margin-bottom: 10px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5);}
+        .hero p { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 4px; opacity: 0.9; }
+
+        /* LỊCH SỬ */
+        .history-box { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-bottom: 60px; }
+        .history-text h3 { font-family: 'Playfair Display', serif; color: var(--son-son); font-size: 2rem; margin-bottom: 20px; }
+        .history-text p { margin-bottom: 15px; text-align: justify; }
+        .history-highlight { border-left: 4px solid var(--vang-thep); padding-left: 20px; font-style: italic; color: #555; background: #fafafa; padding: 15px 20px; border-radius: 0 10px 10px 0;}
+
+        /* QUY TRÌNH */
+        .process-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .process-card { background: var(--den-漆); color: var(--white); padding: 40px; border-radius: 12px; position: relative; border: 1px solid #333; transition: var(--transition); }
+        .process-card:hover { border-color: var(--vang-thep); transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.3);}
+        .process-card .step-num { position: absolute; top: 10px; right: 20px; font-size: 4rem; font-weight: 900; color: rgba(212, 175, 55, 0.15); }
+        .process-card h4 { color: var(--vang-thep); font-size: 1.4rem; margin-bottom: 15px; text-transform: uppercase; font-family: 'Playfair Display', serif; }
+        .process-card ul { list-style: none; }
+        .process-card ul li { font-size: 0.9rem; margin-bottom: 8px; position: relative; padding-left: 20px; }
+        .process-card ul li::before { content: '•'; position: absolute; left: 0; color: var(--vang-thep); }
+
+        /* VIDEO */
+        .video-box { background: var(--bg-color); border-radius: 20px; padding: 40px; text-align: center; margin-top: 50px; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        /* SẢN PHẨM */
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 20px; }
+        .product-card { background: white; border-radius: 12px; overflow: hidden; border: 1px solid #eee; transition: var(--transition); box-shadow: 0 5px 15px rgba(0,0,0,0.05);}
+        .product-card:hover { transform: translateY(-12px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); border-color: var(--vang-thep); }
+        .product-img-box { position: relative; height: 260px; overflow: hidden; }
+        .product-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s ease; }
+        .product-card:hover .product-img-box img { transform: scale(1.1); }
+        .product-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(128, 0, 0, 0.3); opacity: 0; transition: 0.3s; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem;}
+        .product-card:hover .product-overlay { opacity: 1; }
+        .product-info { padding: 25px; text-align: center; }
+        .category-tag { font-size: 0.75rem; text-transform: uppercase; color: var(--son-son); font-weight: 700; letter-spacing: 2px; display: block; margin-bottom: 10px; }
+        .product-info h3 { font-family: 'Playfair Display', serif; color: var(--den-漆); font-size: 1.4rem; margin-bottom: 10px; }
+        .product-info p { font-size: 0.9rem; color: #666; line-height: 1.6; }
+
+        /* LIÊN HỆ & BẢN ĐỒ */
+        .contact-map-wrapper { display: flex; flex-wrap: wrap; gap: 40px; }
+        .address-info { flex: 1; min-width: 300px; font-size: 16px; }
+        .address-info h3 { font-family: 'Playfair Display', serif; color: var(--son-son); font-size: 1.8rem; margin-bottom: 20px;}
+        .address-info p { margin-bottom: 10px; }
+        .map-container { flex: 1.5; min-width: 300px; }
+        .contact-form { flex: 1; min-width: 300px; background: #fafafa; padding: 30px; border-radius: 12px; border: 1px solid #eee; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem;}
+        .form-group input, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; transition: 0.3s;}
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--vang-thep); outline: none; }
+        .btn-submit { background-color: var(--son-son); color: white; border: none; padding: 15px 25px; font-size: 16px; border-radius: 8px; cursor: pointer; width: 100%; text-transform: uppercase; font-weight: bold; transition: 0.3s;}
+        .btn-submit:hover { background-color: var(--vang-thep); color: var(--den-漆); }
+
+        /* FOOTER */
+        footer { background: var(--den-漆); color: var(--white); padding: 80px 10% 40px; border-top: 5px solid var(--son-son); }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1.5fr; gap: 100px; max-width: 1300px; margin: 0 auto;}
+        .team-info { background: rgba(255,255,255,0.05); padding: 30px; border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px;}
+        .team-info h2 { color: var(--vang-thep); font-family: 'Playfair Display', serif; margin-bottom: 15px; }
+
+        @media (max-width: 992px) { 
+            .history-box, .footer-grid { grid-template-columns: 1fr; gap: 40px;} 
+            section { margin: 30px 5%; padding: 50px 5%; }
+            nav { display: none; }
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--gold-color);
+            text-transform: uppercase;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+            background-color: #fff;
+            border-radius: 50%;
+            padding: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <header id="header">
+        <a href="#" class="logo">
+            <img src="11.webp" alt="Logo Làng Nghề"> 
+            Tiên Nộn Art
+        </a>
+        <nav>
+            <a href="#lich-su">Lịch Sử</a>
+            <a href="#quy-trinh">Quy Trình</a>
+            <a href="#san-pham">Sản Phẩm</a>
+            <a href="#dia-chi">Liên Hệ</a>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <div class="reveal">
+            <p>Di sản truyền đời từ Cố đô</p>
+            <h1>SƠN SON THẾP VÀNG</h1>
+            <p>Nhóm 2 - Tổ 4 | Đề tài nghiên cứu văn hóa</p>
+        </div>
+    </div>
+
+    <section id="lich-su">
+        <h2 class="section-title reveal">Lịch Sử Hình Thành</h2>
+        <div class="history-box">
+            <div class="history-text reveal">
+                <h3>Khơi nguồn từ phương Bắc</h3>
+                <p>Nghề sơn làng Tiên Nộn có cội nguồn xa xưa, bắt đầu khi các bậc tiền hiền từ vùng Nam Định, Thanh Hóa theo chúa Nguyễn vào Nam mở cõi. Họ mang theo bí quyết pha chế "sơn ta" - một loại nhựa quý từ cây sơn vùng Phú Thọ - để phục vụ nhu cầu trang trí cung điện.</p>
+                <div class="history-highlight">
+                    "Làng Tiên Nộn nằm cạnh ngã ba Sình, nơi giao thoa của các dòng chảy văn hóa, tạo điều kiện cho các nghệ nhân tiếp thu tinh hoa mỹ thuật cung đình Huế."
+                </div>
+            </div>
+            <div class="history-img reveal">
+                <img src="3.webp" alt="Lịch sử" style="width: 100%; border-radius: 10px; box-shadow: 20px 20px 0 var(--son-son);">
+            </div>
+        </div>
+        <div class="history-box">
+            <div class="history-img reveal" style="order: 2;">
+                <img src="2.jpg" alt="Cung đình" style="width: 100%; border-radius: 10px; box-shadow: -20px 20px 0 var(--vang-thep);">
+            </div>
+            <div class="history-text reveal" style="order: 1;">
+                <h3>Thời hoàng kim triều Nguyễn</h3>
+                <p>Dưới thời các vua nhà Nguyễn (1802-1945), làng Tiên Nộn trở thành một "công xưởng" khổng lồ. Hầu hết các bức hoành phi, câu đối, ngai vàng và đồ tự khí trong Đại Nội Huế đều do bàn tay khéo léo của thợ Tiên Nộn thực hiện.</p>
+                <p>Các nghệ nhân nơi đây không chỉ là thợ thủ công, họ là những "họa sĩ cung đình" thực thụ, nắm giữ bí quyết thếp vàng lá mỏng đến mức gió không được thổi qua khi làm việc.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="quy-trinh">
+        <h2 class="section-title reveal">Quy Trình Chế Tác Chuyên Sâu</h2>
+        <div class="process-list">
+            <div class="process-card reveal">
+                <span class="step-num">01</span>
+                <h4>Xử lý Cốt Gỗ (Vóc)</h4>
+                <ul>
+                    <li>Chọn gỗ dổi hoặc gỗ mít khô, không lỗi.</li>
+                    <li>Đục chạm hoa văn (rồng, phượng, tùng, cúc).</li>
+                    <li>Làm nhẵn bề mặt bằng giấy ráp mịn.</li>
+                </ul>
+            </div>
+            <div class="process-card reveal" style="transition-delay: 0.1s;">
+                <span class="step-num">02</span>
+                <h4>Bó Hom & Lót Sơn</h4>
+                <ul>
+                    <li>Dùng sơn ta trộn đất mịn để "bó" khe hở gỗ.</li>
+                    <li>Hom sơn giúp gỗ không bị nứt vỡ, thấm nước.</li>
+                    <li>Phủ ít nhất 3-5 lớp lót để tạo độ dày bề mặt.</li>
+                </ul>
+            </div>
+            <div class="process-card reveal" style="transition-delay: 0.2s;">
+                <span class="step-num">03</span>
+                <h4>Mài Nước Kỹ Thuật</h4>
+                <ul>
+                    <li>Mài sản phẩm dưới nước bằng đá mài.</li>
+                    <li>Đạt độ phẳng mịn "như gương".</li>
+                    <li>Đây là bước quyết định độ bóng sâu của sơn mài.</li>
+                </ul>
+            </div>
+            <div class="process-card reveal" style="transition-delay: 0.3s;">
+                <span class="step-num">04</span>
+                <h4>Kỹ Thuật Thếp Vàng</h4>
+                <ul>
+                    <li>Phủ lớp "sơn cầm" (sơn dính) lên hoa văn.</li>
+                    <li>Dùng kềm gắp từng lá vàng mười 24K siêu mỏng.</li>
+                    <li>Dán nhẹ nhàng và dùng chổi thỏ để "dặm" vàng.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="video-box reveal">
+            <h3 style="margin-bottom: 25px; font-family: 'Playfair Display'; color: var(--son-son); font-size: 1.8rem;">Xem Nghệ Nhân Thực Hiện</h3>
+            <div class="video-wrapper">
+                <video src="10.mp4" controls>...</video>
+            </div>
+        </div>
+    </section>
+
+    <section id="san-pham">
+        <h2 class="section-title reveal">Danh Mục Tác Phẩm Chi Tiết</h2>
+        <div class="product-grid">
+            
+            <div class="product-card reveal">
+                <div class="product-img-box">
+                    <img src="4.jpg" alt="Hoành phi">
+                    <div class="product-overlay">⚜️</div>
+                </div>
+                <div class="product-info">
+                    <span class="category-tag">Đồ Thờ Cúng</span>
+                    <h3>Hoành Phi - Câu Đối</h3>
+                    <p>Chế tác từ gỗ dổi nguyên khối, sơn son thếp vàng 24K cực mỏng. Thể hiện gia phong và lòng thành kính tổ tiên.</p>
+                </div>
+            </div>
+
+            <div class="product-card reveal" style="transition-delay: 0.1s;">
+                <div class="product-img-box">
+                    <img src="5.webp" alt="Tượng Phật">
+                    <div class="product-overlay">⚜️</div>
+                </div>
+                <div class="product-info">
+                    <span class="category-tag">Tôn Giáo</span>
+                    <h3>Tượng Phật Tam Thế</h3>
+                    <p>Kỹ thuật sơn thếp truyền thống giúp pho tượng toát lên vẻ từ bi, uy nghiêm và bền bỉ hàng trăm năm.</p>
+                </div>
+            </div>
+
+            <div class="product-card reveal" style="transition-delay: 0.2s;">
+                <div class="product-img-box">
+                    <img src="6.jpg" alt="Tranh sơn mài">
+                    <div class="product-overlay">⚜️</div>
+                </div>
+                <div class="product-info">
+                    <span class="category-tag">Trang Trí</span>
+                    <h3>Tranh Sơn Mài Cẩn Ốc</h3>
+                    <p>Sự kết hợp hoàn hảo giữa vỏ trai tự nhiên và kỹ thuật sơn mài Tiên Nộn đen bóng sâu thẳm.</p>
+                </div>
+            </div>
+
+            <div class="product-card reveal" style="transition-delay: 0.3s;">
+                <div class="product-img-box">
+                    <img src="7.jpg" alt="Hộp sắc phong">
+                    <div class="product-overlay">⚜️</div>
+                </div>
+                <div class="product-info">
+                    <span class="category-tag">Mỹ Nghệ</span>
+                    <h3>Hộp Đựng Sắc Phong</h3>
+                    <p>Vật phẩm cung đình xưa, chạm trổ rồng phượng tinh xảo, dùng để bảo quản các văn bản quan trọng của triều đình.</p>
+                </div>
+            </div>
+
+            <div class="product-card reveal" style="transition-delay: 0.4s;">
+                <div class="product-img-box">
+                    <img src="8.jpg" alt="Ngai thờ">
+                    <div class="product-overlay">⚜️</div>
+                </div>
+                <div class="product-info">
+                    <span class="category-tag">Di Sản</span>
+                    <h3>Ngai Thờ - Khám Thờ</h3>
+                    <p>Biểu tượng cao quý nhất trong không gian thờ tự, được thiếp vàng rực rỡ và đục chạm hoa văn sen hóa rồng.</p>
+                </div>
+            </div>
+
+            <div class="product-card reveal" style="transition-delay: 0.5s;">
+                <div class="product-img-box">
+                    <img src="9.jpg" alt="Bình hoa">
+                    <div class="product-overlay">⚜️</div>
+                </div>
+                <div class="product-info">
+                    <span class="category-tag">Lifestyle</span>
+                    <h3>Bình Hoa Sơn Son</h3>
+                    <p>Sản phẩm mang tính ứng dụng cao cho không gian hiện đại nhưng vẫn giữ được hồn cốt làng nghề truyền thống.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="dia-chi">
+        <h2 class="section-title reveal">Địa Chỉ & Liên Hệ</h2>
+        <div class="contact-map-wrapper">
+            <div class="address-info reveal">
+                <h3>Trụ Sở Hội Nghệ Nhân Tiên Nộn</h3>
+                <p><strong>📍 Địa chỉ:</strong> Thôn Tiên Nộn, Xã Phú Mậu, Thành phố Huế, Tỉnh Thừa Thiên Huế.</p>
+                <p><strong>📞 Điện thoại:</strong> 0123 456 789</p>
+                <p><strong>✉️ Email:</strong> lienhe@tiennonart.vn</p> 
+                <p><strong>⏰ Giờ mở cửa:</strong> 08:00 - 17:00 (Từ Thứ 2 đến Chủ nhật)</p>
+                <p style="margin-top: 15px; font-style: italic; color: #555;">Đến với chúng tôi, quý khách sẽ được tận mắt chứng kiến quy trình làm nghề thủ công tỉ mỉ, từ khâu làm vóc, lót sơn, mài nhẵn đến thếp vàng hoàn thiện.</p>
+            </div>
+            
+            <div class="contact-form reveal" style="transition-delay: 0.1s;">
+                <h3 style="font-family: 'Playfair Display', serif; color: var(--son-son); margin-bottom: 20px; font-size: 1.5rem;">Gửi Yêu Cầu Tư Vấn</h3>
+                <form action="#" method="POST">
+                    <div class="form-group">
+                        <label for="name">Họ và Tên:</label>
+                        <input type="text" id="name" name="name" placeholder="Nhập họ tên của bạn..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Số điện thoại:</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Nội dung yêu cầu:</label>
+                        <textarea id="message" name="message" rows="4" placeholder="Bạn cần chúng tôi hỗ trợ gì?" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Gửi Thông Tin</button>
+                </form>
+            </div>
+<section class="bg-[#FDFBF7]">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15252.091011195663!2d107.568478!3d16.486255!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3141a13b63200001%3A0x7d35dc6a27e7104f!2zUGjDuiBN4bqtdSwgUGjDuiBWYW5nLCBUaMaw4burYSBUaGnDqm4gSHXhur8!5e0!3m2!1svi!2s!4v1699999999999!5m2!1svi!2s" width="500" height="450" style="border:0; filter: grayscale(20%) contrast(1.2);" allowfullscreen="" loading="lazy"></iframe>
+    </section>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="reveal">
+                <h1 class="logo" style="font-size: 2.5rem; margin-bottom: 20px;">LÀNG NGHỀ TIÊN NỘN</h1>
+                <p style="opacity: 0.7; max-width: 500px;">Nhóm 2 - Tổ 4.</p>
+            </div>
+            <div class="team-info reveal" style="transition-delay: 0.2s;">
+                <h2>NHÓM 2 / TỔ 4</h2>
+                <p><strong>Dự án:</strong> Văn hóa Làng nghề Huế 2026</p>
+                <p><strong>Chủ đề:</strong> Nghệ thuật Sơn son Thếp vàng</p>
+                <p style="margin-top: 20px; font-size: 0.8rem; border-top: 1px solid rgba(212,175,55,0.3); padding-top: 20px; opacity: 0.8;">
+                    Cảm ơn thầy cô và các bạn đã theo dõi bài trình bày của chúng em.
+                </p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 60px; font-size: 0.75rem; opacity: 0.4; letter-spacing: 2px;">
+            © 2026 Crafted by Nhóm 2 - Tổ 4. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        let lastScrollTop = 0;
+        const header = document.getElementById('header');
+
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            // 1. XỬ LÝ THANH MENU (HEADER)
+            // Nếu cuộn xuống và vượt qua 100px -> Ẩn header
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                header.classList.add('hide-up');
+            } 
+            // Nếu cuộn lên -> Hiện lại header
+            else {
+                header.classList.remove('hide-up');
+            }
+
+            // Đổi màu nền menu (sticky) khi cuộn qua Hero banner
+            if (scrollTop > 100) {
+                header.classList.add('sticky');
+            } else {
+                header.classList.remove('sticky');
+            }
+
+            // Cập nhật lại vị trí cuộn hiện tại
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; 
+
+            // 2. GỌI HÀM HIỆU ỨNG NỘI DUNG
+            reveal();
+        });
+
+        // 3. XỬ LÝ NỘI DUNG HIỆN/ẨN KHI CUỘN QUA
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            var windowHeight = window.innerHeight;
+
+            for (var i = 0; i < reveals.length; i++) {
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementBottom = reveals[i].getBoundingClientRect().bottom;
+                
+                // Điều kiện: Đỉnh của phần tử đã vào màn hình VÀ đáy của nó chưa khuất hẳn lên trên
+                if (elementTop < windowHeight - 100 && elementBottom > 50) {
+                    reveals[i].classList.add("active");
+                } else {
+                    // XÓA class active khi phần tử trôi ra khỏi màn hình (ẩn nội dung)
+                    // Nhờ việc xóa này, khi vuốt ngược lại, hiệu ứng sẽ được kích hoạt lại từ đầu.
+                    reveals[i].classList.remove("active");
+                }
+            }
+        }
+        
+        // Chạy hàm ngay khi tải trang xong
+        window.onload = reveal;
+    </script>
+</body>
+</html>
